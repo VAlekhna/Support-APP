@@ -18,11 +18,12 @@ from django.urls import path, include
 from rest_framework.routers import SimpleRouter
 from rest_framework_simplejwt.views import (TokenObtainPairView, TokenRefreshView,)
 
-from support.views import QuestionViewSet
+from support.views import QuestionViewSet, AnswerViewSet
 
 router = SimpleRouter()
 
 router.register(r'question', QuestionViewSet)
+router.register(r'answer', AnswerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

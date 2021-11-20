@@ -33,7 +33,7 @@ class QuestionsApiTestCase(APITestCase):
         self.assertEqual(status.HTTP_200_OK, response.status_code)
         self.assertEqual(serializer_data, response.data)
 
-    def test_create(self,):
+    def test_create_no_permissions(self,):
         url = reverse('question-list')
         data = {
             "name": "POST TEST",
