@@ -17,5 +17,5 @@ class QuestionViewSet(ModelViewSet):
     ordering_fields = ['question_status', 'create_date']
 
     def perform_create(self, serializer):
-        serializer.validate_data['author'] = self.request.user
+        serializer.validated_data['author'] = self.request.user
         serializer.save()
