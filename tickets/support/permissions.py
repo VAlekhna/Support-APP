@@ -1,17 +1,18 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS
 
 
+SUPPORT_APP_SAFE_METHODS = ('GET', 'POST', 'HEAD', 'OPTIONS')
+
+
+class IsStaffOrQuestionOnly(BasePermission):
+    def has_permission(self, request, view):
+        return bool((request.user and request.user.is_authenticated and request.method in SUPPORT_APP_SAFE_METHODS)
+                    or request.user.is_staff)
+
+
 class IsStaffOrReadOnly(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return bool(request.method in SAFE_METHODS or request.user.is_staff)
-# Добавить новую модель ответов, связать ответы со стафом или с автором вопроса.
+    def has_permission(self, request, view):
+        return bool((request.user and request.user.is_authenticated and request.method in SAFE_METHODS)
+                    or request.user.is_staff)
 
 
-# class IsStaffOrAuthorOnly(BasePermission):
-#     def has_object_permission(self, request, view, obj):
-#         # return bool(
-#         #     request.method in SAFE_METHODS or
-#         #     request.user and
-#         #     request.user.is_authenticated and request.user.is_staff
-#         # ) obj.author == request.user or
-#         return bool(request.user.is_staff)
