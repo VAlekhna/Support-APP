@@ -14,14 +14,8 @@ class Question(models.Model):
     )
     question_status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='На рассмотрении',
                                        blank=True, null=True)
-    parent = models.ForeignKey(
-        'self',
-        verbose_name='Первоначальный вопрос',
-        blank=True,
-        null=True,
-        related_name='answer_children',
-        on_delete=models.CASCADE
-    )
+    parent = models.ForeignKey('self', verbose_name='Первоначальный вопрос', blank=True, null=True,
+                               related_name='answer_children', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Id{self.id}: {self.name} - {self.question_status}'

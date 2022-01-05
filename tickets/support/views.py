@@ -1,10 +1,10 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.viewsets import ModelViewSet
 
-from support.models import Question, Answer
+from support.models import Answer, Question
 from support.permissions import IsStaffOrQuestionOnly, IsStaffOrReadOnly
-from support.serializers import QuestionSerializer, AnswerSerializer
+from support.serializers import AnswerSerializer, QuestionSerializer
 
 
 class QuestionViewSet(ModelViewSet):

@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  my_database:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: "my_database"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  web:
+    build: .
+    command: python /usr/src/support_app/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/support_app/
+    ports:
+      - "8000:8000"
+    depends_on:
+      - my_database
+
+volumes:
+  postgres_data:

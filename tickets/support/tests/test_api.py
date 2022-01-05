@@ -5,7 +5,6 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-
 from support.models import Question
 from support.serializers import QuestionSerializer
 
@@ -43,4 +42,3 @@ class QuestionsApiTestCase(APITestCase):
         response = self.client.post(url, data=json_data, content_type='application/json')
 
         self.assertEqual(status.HTTP_401_UNAUTHORIZED, response.status_code)
-
