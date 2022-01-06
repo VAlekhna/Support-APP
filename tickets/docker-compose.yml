@@ -1,6 +1,13 @@
 version: '3.8'
 
 services:
+  redis:
+    image: redis:4
+    volumes:
+      - redis_data:/var/lib/redis/data/
+    ports:
+      - "6379:6379"
+
   my_database:
     image: postgres:14
     environment:
@@ -17,6 +24,14 @@ services:
       - "8000:8000"
     depends_on:
       - my_database
+      - redis
+  celery:
+    build: .
+    command: celery -A tickets worker -l info
+    depends_on:
+      - web
+      - redis
 
 volumes:
   postgres_data:
+  redis_data:

@@ -5,6 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from support.models import Answer, Question
 from support.permissions import IsStaffOrQuestionOnly, IsStaffOrReadOnly
 from support.serializers import AnswerSerializer, QuestionSerializer
+from .tasks import send_alert
 
 
 class QuestionViewSet(ModelViewSet):
@@ -17,6 +18,7 @@ class QuestionViewSet(ModelViewSet):
     ordering_fields = ['question_status', 'create_date']
 
     def perform_create(self, serializer):
+        send_alert.delay()
         serializer.validated_data['author'] = self.request.user
         serializer.save()
 
