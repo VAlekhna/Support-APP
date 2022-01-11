@@ -3,16 +3,16 @@ from django.db import models
 
 
 class Question(models.Model):
+    class StatusChoice(models.TextChoices):
+        reviewed = 'Рассмотрено', 'Рассмотрено'
+        under_consideration = 'На рассмотрении', 'На рассмотрении'
+        suspended = 'Приостановлено', 'Приостановлено'
+
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор вопроса', blank=True, null=True)
     create_date = models.DateTimeField(auto_now=True)
     name = models.CharField(max_length=200, verbose_name='Суть вопроса')
     text = models.TextField(verbose_name='Ваш вопрос')
-    STATUS_CHOICE = (
-        ('Рассмотрено', 'Рассмотрено'),
-        ('На рассмотрении', 'На рассмотрении'),
-        ('Приостановлено', 'Приостановлено')
-    )
-    question_status = models.CharField(max_length=20, choices=STATUS_CHOICE, default='На рассмотрении',
+    question_status = models.CharField(max_length=20, choices=StatusChoice.choices, default='На рассмотрении',
                                        blank=True, null=True)
     parent = models.ForeignKey('self', verbose_name='Первоначальный вопрос', blank=True, null=True,
                                related_name='answer_children', on_delete=models.CASCADE)
